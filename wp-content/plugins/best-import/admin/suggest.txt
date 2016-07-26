@@ -1,0 +1,16 @@
+&lt;channel/title&gt;
+&lt;channel/link&gt;
+&lt;channel/description&gt;
+&lt;channel/pubDate&gt;
+&lt;channel/language&gt;
+&lt;channel/generator&gt;
+&lt;image/url&gt;
+&lt;image/title&gt;
+&lt;image/link&gt;
+&lt;item/title&gt;
+&lt;item/link&gt;
+&lt;item/pubDate&gt;
+&lt;item/guid&gt;
+&lt;item/guid&gt;[isPermaLink=false]
+&lt;item/description&gt;
+&lt;media&gt;
