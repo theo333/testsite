@@ -34,6 +34,11 @@ wp-content/*
 # wp-content/plugins/*
 # wp-content/themes/*
 
+# ignore these themes
+wp-content/themes/twentythirteen/
+wp-content/themes/twentyfourteen/
+wp-content/themes/twentyfifteen/
+
 # (not sure should use) ignore all files starting with . or ~
 # .*
 #  ~*
