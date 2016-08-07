@@ -7,6 +7,7 @@
  * @package _s
  */
 
+//$post_meta = esc_url(get_post_meta($post->ID, 'url', true ));
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -22,7 +23,7 @@
             the_post_thumbnail( 'cpttheme', array( 'class' => 'myp-screenshot-thumb' ));
 			the_content();
 		?>
-		<p><a href="<?php echo get_post_meta($post->ID, 'url', true ); ?>" target="_blank"><?php echo get_post_meta($post->ID, 'url', true ); ?></a></p> 
+		 <p><a href="<?php echo get_post_meta($post->ID, 'url', true ); ?>" target="_blank"><?php echo get_post_meta($post->ID, 'url', true ); ?></a></p> 
 	</div><!-- .entry-content -->
 
 	<footer class="entry-footer">

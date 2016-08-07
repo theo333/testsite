@@ -20,9 +20,9 @@ function create_posttype () {
         'name'                => __( 'Portfolio' ),
         'singular_name'       => __( 'Portfolio' ),
         'add_new_item'        => __( 'Add New Portfolio Item'),
-        'edit_item'        => __( 'Edit Portfolio Item' ),
-        'featured_image'        => __( 'Website Homepage Screenshot'),
-        'set_featured_image'        => __( 'Select Website Screenshot'),
+        'edit_item'           => __( 'Edit Portfolio Item' ),
+        'featured_image'      => __( 'Website Homepage Screenshot'),
+        'set_featured_image'  => __( 'Select Website Screenshot'),
     );
     
     $args = array(
@@ -31,51 +31,41 @@ function create_posttype () {
         'has_archive'         => true,
         'menu_position'       => 5,  //moved menu item below Post
         'menu_icon'           => 'dashicons-format-gallery',  //from https://developer.wordpress.org/resource/dashicons/#format-gallery
-        'supports'            => array('title', 'editor', 'thumbnail', 'custom-fields', 'revisions'),
+        'supports'            => array('title', 'editor', 'author', 'thumbnail', 'custom-fields', 'revisions'),
         'rewrite'             => array( 'slug' => __('portfolio' )),  //create clean URL so displays URL: sitename.com/portfolio/    
     );
 
     register_post_type( 'myportfolio', $args );
 }
 
-//// change columns for the edit Portfolio CPT screen
-//// https://yoast.com/dev-blog/custom-post-type-snippets/
-//function myp_change_columns( $cols) {
-////    $cols = array(
-////        'url'    => __( 'URL', 'myportfolio' ),
-////    );
-////    return $cols;
-//    $cols['url'] = __( 'URL', 'myportfolio' );
-//}
-//add_filter( 'manage_myportfolio_posts_columns', 'myp_change_columns' );
-//
-//// fill edit Portfolio CPT screen with content from CPT
-//function myp_custom_columns( $column, $post_id ) {
-//    switch ( $column ) {
-//        case 'url' :
-//            $url = get_post_meta( $post_id, 'url', true);
-//            echo '<a href="' . $url . '">' . $url. '</a>';
-//            break;
-//    }
-//}
-//
-//add_action( 'manage_myportfolio_posts_custom_column', 'myp_custom_columns', 10, 2 );
-//
-////function myp_columns_head($defaults) {
-////    $defaults['url']            = 'URL';
-////    $defaults['second_column']  = 'Second Column';
-////    return $defaults;
-////}
-////
-////function myp_columns_content($column_name, $post_ID) {
-////    if ($column_name == 'url') {
-////        
-////    }
-////    if ($column_name == 'second_column') {
-////        
-////    }
-////}
-//
 
+//  https://codex.wordpress.org/Plugin_API/Action_Reference/manage_posts_custom_column
+// register admin columns for custom post type myportfolio
+add_filter('manage_myportfolio_posts_columns', 'add_myportfolio_columns');
 
+function add_myportfolio_columns( $columns ) {
+    $columns = array(
+        'cb' => '<input type=\"checkbox\" />',
+        'title' => __('Client Name'),
+        'myportfolio_url' => __('URL'),
+        'thumbnail' => __('Website Homepage Screenshot'),
+    );
+    return $columns;
+}
 
+// populate data into admin columns for custom post type myportfolio
+add_action( 'manage_myportfolio_posts_custom_column' , 'myportfolio_custom_columns', 10, 2 );
+
+function myportfolio_custom_columns( $column, $post_id ) {
+    switch ( $column ) {
+            
+        case "myportfolio_url" :
+            $url = get_post_meta( $post_id, 'myportfolio_url', true );
+            echo $url;
+            break;        
+        case "thumbnail" :
+            $thumbnail = the_post_thumbnail( array('80','80') );
+            echo $thumbnail;
+            break;
+    }
+}
