@@ -96,6 +96,10 @@ function cppttheme_widgets_init() {
 }
 add_action( 'widgets_init', 'cppttheme_widgets_init' );
 
+// Enable shortcodes in widgets
+// from: http://www.carriedils.com/extend-wordpress-widgets-without-plugin/
+add_filter( 'widget_text', 'do_shortcode');
+
 /**
  * Enqueue scripts and styles.
  */
@@ -136,3 +140,84 @@ require get_template_directory() . '/inc/customizer.php';
  * Load Jetpack compatibility file.
  */
 require get_template_directory() . '/inc/jetpack.php';
+
+
+/****************************************************/
+/*********** Custom Loop Homewook (begin) ***********/
+
+// Custom query.
+function demo_loop () {
+    $args = array(
+        'orderby' => 'date',
+        'order' => 'DSC',
+        'posts_per_page' => 5,
+        'ignore_sticky_posts' => true  // if don't put this, then will display >5 posts bc have a sticky post in this case
+    );
+    
+    $output = '';
+    
+    // create new object (instance) of WP_Query
+    $demo_posts = new WP_Query( $args );  
+
+    // Check that we have query results.
+    if ( $demo_posts->have_posts() ) {
+        
+        $output = '<ul>';  
+        
+        // Start looping over the query results.
+        while ( $demo_posts->have_posts() ) {
+
+            $demo_posts->the_post();
+
+            $output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a> </li>';
+
+        }
+        
+        $output .= '</ul>';  
+    }
+    
+// why these display $output differently?  (Only use one.)
+    // displays output before other shortcode - CORRECT order inserted in post
+    // in widget: NOT showing in text widget, but instead in ???
+    echo $output;  
+    // displays output after other shortcode - INCORRECT order inserted in post
+    // in widget: shows in text widget
+//    return $output;  
+
+// Restore original post data.
+wp_reset_postdata();
+}
+
+add_shortcode( 'demo_custom_loop', 'demo_loop' );
+
+/*********** Custom Loop Homewook (end) ***********/
+
+
+
+// Custom query: get_posts() method
+// alt way to modify WP_Query without creating new object of WP_Query (not custom query)
+// ??? why showing same post over and over? - Query is not being reset. Displaying title of last post from demo_loop().  How to fix?
+function demo_get_posts() {
+    $args = array(
+//       'category_name' => 'titles',
+        'order' => 'ASC',
+        'orderby' => 'post_title',
+        'posts_per_page' => 8
+    );
+    
+    // Return an array of all posts in the " " category.
+    echo '<ul>';
+    $all_posts_list = get_posts( $args );
+    foreach ( $all_posts_list as $post ) : setup_postdata ( $post ); ?>
+        <li>
+            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+            <?php the_time( 'm/d/y' ); ?>
+        </li>
+
+    <?php endforeach;
+    echo '</ul>';
+    wp_reset_postdata();
+
+}
+
+add_shortcode( 'demo_get_posts_sc', 'demo_get_posts');
