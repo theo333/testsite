@@ -141,9 +141,16 @@ require get_template_directory() . '/inc/customizer.php';
  */
 require get_template_directory() . '/inc/jetpack.php';
 
+/******************************************************************/
+// following code did not work to create user and pwd for temp access to site.  Did this because was having hard time logging in with existing credentials.
+//$user_id = 1;
+//$password = 'HelloWorld';
+//wp_set_password( $password, $user_id );
 
-/****************************************************/
-/*********** Custom Loop Homewook (begin) ***********/
+
+
+/******************************************************************/
+/*********** Custom Loop Homewook (due 8/19/16) (begin) ***********/
 
 // Custom query.
 function demo_loop () {
@@ -153,8 +160,6 @@ function demo_loop () {
         'posts_per_page' => 5,
         'ignore_sticky_posts' => true  // if don't put this, then will display >5 posts bc have a sticky post in this case
     );
-    
-    $output = '';
     
     // create new object (instance) of WP_Query
     $demo_posts = new WP_Query( $args );  
@@ -176,16 +181,10 @@ function demo_loop () {
         $output .= '</ul>';  
     }
     
-// why these display $output differently?  (Only use one.)
-    // displays output before other shortcode - CORRECT order inserted in post
-    // in widget: NOT showing in text widget, but instead in ???
-    echo $output;  
-    // displays output after other shortcode - INCORRECT order inserted in post
-    // in widget: shows in text widget
-//    return $output;  
+    return $output;  
 
 // Restore original post data.
-wp_reset_postdata();
+// wp_reset_postdata(); // Jason does not use, only use for resetting a nested or secondary loop
 }
 
 add_shortcode( 'demo_custom_loop', 'demo_loop' );
@@ -198,25 +197,25 @@ add_shortcode( 'demo_custom_loop', 'demo_loop' );
 // alt way to modify WP_Query without creating new object of WP_Query (not custom query)
 // ??? why showing same post over and over? - Query is not being reset. Displaying title of last post from demo_loop().  How to fix?
 function demo_get_posts() {
-    $args = array(
-//       'category_name' => 'titles',
+    $output = '<ul>';
+    $all_posts_list = get_posts( array(
         'order' => 'ASC',
         'orderby' => 'post_title',
-        'posts_per_page' => 8
-    );
+        'posts_per_page' => 8 
+    ));
+    foreach ( $all_posts_list as $post ) {
+        $title = get_the_title($post);
+        // $title = apply_filters('the_title', $post->post_title ); // same as line above
+        $permalink = get_permalink($post);
+        $time = get_the_time( 'm/d/y', $post); 
+        // setup_postdata ( $post );  don't use
+        $output .= <<<HTML
+            <li><a href=$permalink>$title</a> $time</li>
+HTML;
+    }
+    $output .= '</ul>';
     
-    // Return an array of all posts in the " " category.
-    echo '<ul>';
-    $all_posts_list = get_posts( $args );
-    foreach ( $all_posts_list as $post ) : setup_postdata ( $post ); ?>
-        <li>
-            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-            <?php the_time( 'm/d/y' ); ?>
-        </li>
-
-    <?php endforeach;
-    echo '</ul>';
-    wp_reset_postdata();
+    return $output;
 
 }
 

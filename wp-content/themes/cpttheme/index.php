@@ -2,11 +2,10 @@
 /**
  * The tmeplate for displaying posts
  * 
- * @package ??
+ * @package cpttheme
  */
 
 get_header(); ?>  
-
 
     <div id="primary" class="content-area">
         <main id="main" class="site-main" role="main">
@@ -16,13 +15,16 @@ get_header(); ?>
         if ( have_posts() ) :
             // execute while the statement have_posts() is true, loops 
             while ( have_posts() ) :  
-                the_post();  // checks for next item in current collection of posts. Retreives next post.
-                   the_content(); // content of posts
-            endwhile;
-        endif;           
-
-        </main>        
-    </div>
+                the_post();  // checks for next item in current collection of posts. Retreives next post. i++
+                    get_template_part( 'template-parts/content', get_post_format());
+                  // the_content(); 
+            endwhile; 
+        else :
+            get_template_part( 'template-parts/content', 'none' );
+        endif;
+        ?>
+        </main><!-- #main -->        
+    </div><!-- #primary -->
             
 <?php            
 get_sidebar();
