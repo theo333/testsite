@@ -9,12 +9,13 @@
  */
  
 /* register custom post type
- * do in plugin, rather than in theme so data can be accessed if switch themes
+ * choosing to do in plugin just to make it easier for me to work on code, but Jason suggests do in functions.php of theme.
  * @link https://codex.wordpress.org/Function_Reference/register_post_type
  */  
 
 /************************************************/
 /**************** PORTFOLIO *********************/
+/**************** The WP Way ********************/
 
 add_action( 'init', 'create_posttype' );
 
