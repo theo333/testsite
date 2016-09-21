@@ -6,31 +6,31 @@
 
 piklist( 'field', array(
     'type'      => 'text'
-    ,'field'    => 'company_name'
+    ,'field'    => 'cm_company_name'
     ,'label'    => 'Company Name'
 ));
 
 piklist( 'field', array(
     'type'      => 'text'
-    ,'field'    => 'email_address'
+    ,'field'    => 'cm_email_address'
     ,'label'    => 'Email Address'
 ));
 
 piklist( 'field', array(
     'type'      => 'text'
-    ,'field'    => 'phone_number'
+    ,'field'    => 'cm_phone_number'
     ,'label'    => 'Phone Number'
 ));
 
 piklist( 'field', array(
     'type'      => 'datepicker'
-    ,'field'    => 'date_met'
+    ,'field'    => 'cm_date_met'
     ,'label'    => 'Date Met'
 ));
 
 piklist( 'field', array(
     'type'      => 'select'
-    ,'field'    => 'relationship'
+    ,'field'    => 'cm_relationship'
     ,'label'    => 'Relationship'
     ,'choices'  => array(
         'friend'  => 'Friend'
@@ -44,7 +44,7 @@ piklist( 'field', array(
 
 piklist( 'field', array(
     'type'      => 'textarea'
-    ,'field'    => 'notes'
+    ,'field'    => 'cm_notes'
     ,'label'    => 'Notes'
     ,'attributes' => array(
         'rows'  => 10

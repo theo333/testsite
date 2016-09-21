@@ -55,7 +55,7 @@ function create_posttype_contacts() {
 /**************** The Piklist Way ***************/
 
 // https://piklist.com/learn/doc/piklist_post_types/
-// Piklist: add 'contacts' custom post type
+// Piklist: add 'contacts2' custom post type
 add_filter( 'piklist_post_types', 'piklist_contacts2_post_type');
 
 function piklist_contacts2_post_type() {
@@ -86,9 +86,9 @@ function piklist_contacts2_post_type() {
         ,'capability_type' => 'post'
         ,'edit_columns' => array(
             'title'     => __( 'Contact Name' )
-            ,'company_name'  => __( 'Company Name' )
-            ,'email_address' => __( 'Email Address' )
-            ,'phone_number' => __( 'Phone Number' )
+            ,'cm_company_name'  => __( 'Company Name' )
+            ,'cm_email_address' => __( 'Email Address' )
+            ,'cm_phone_number' => __( 'Phone Number' )
         )
         ,'hide_meta_box' => array(
             'author'
@@ -104,16 +104,16 @@ add_action( 'manage_contacts2_posts_custom_column', 'contacts2_custom_columns', 
 
 function contacts2_custom_columns($column, $post_id) {
     switch ( $column ) {
-        case "company_name" :
-            $company = get_post_meta( $post_id, 'company_name', true );
+        case "cm_company_name" :
+            $company = get_post_meta( $post_id, 'cm_company_name', true );
             echo $company;
             break;
-        case "email_address" :
-            $email = get_post_meta( $post_id, 'email_address', true );
+        case "cm_email_address" :
+            $email = get_post_meta( $post_id, 'cm_email_address', true );
             echo $email;
             break;
-        case "phone_number" :
-            $phone = get_post_meta( $post_id, 'phone_number', true );
+        case "cm_phone_number" :
+            $phone = get_post_meta( $post_id, 'cm_phone_number', true );
             echo $phone;
             break;
     }
