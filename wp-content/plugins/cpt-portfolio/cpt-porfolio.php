@@ -43,8 +43,9 @@ function create_posttype () {
 }
 
 
-//  https://codex.wordpress.org/Plugin_API/Action_Reference/manage_posts_custom_column
-// register admin columns for custom post type myportfolio
+//** Register Admin Columns for Custom Post Type 'myportfolio'
+// ref:  https://codex.wordpress.org/Plugin_API/Action_Reference/manage_posts_custom_column
+
 add_filter('manage_myportfolio_posts_columns', 'add_myportfolio_columns');
 
 function add_myportfolio_columns( $columns ) {
@@ -94,53 +95,53 @@ $labels = array(
 );
     
 $post_types['portfolio2'] = array(
-  'labels' => $labels
-  ,'title' => __('Enter a new Client Name')
-  ,'menu_icon' => piklist('url', 'piklist') . '/parts/img/piklist-menu-icon.svg'
-  ,'page_icon' => piklist('url', 'piklist') . '/parts/img/piklist-page-icon-32.png'
-  ,'supports' => array(
-    'title'
-    ,'editor'
-    ,'thumbnail'
-  )
-  ,'public' => true
-  ,'admin_body_class' => array(
+  'labels' => $labels,
+  'title' => __('Enter a new Client Name'),
+  'menu_icon' => piklist('url', 'piklist') . '/parts/img/piklist-menu-icon.svg',
+  'page_icon' => piklist('url', 'piklist') . '/parts/img/piklist-page-icon-32.png',
+  'supports' => array(
+    'title',
+    'editor',
+    'thumbnail',
+  ),
+  'public' => true,
+  'admin_body_class' => array(
     'custom-body-class'
-  )
-  ,'has_archive' => true
-  ,'rewrite' => array(
+  ),
+  'has_archive' => true,
+  'rewrite' => array(
     'slug' => 'portfolio2'
-  )
-  ,'capability_type' => 'post'
-  ,'edit_columns' => array(
-    'title' => __('Client Name')
-    ,'client_url' => __('URL')
-    ,'thumbnail' => __('Website Homepage Screenshot')
-    ,'internal_page_screenshot' => __('Internal Page Screenshot') 
-  )
-  ,'hide_meta_box' => array(
+  ),
+  'capability_type' => 'post',
+  'edit_columns' => array(
+    'title' => __('Client Name'),
+    'client_url' => __('URL'),
+    'thumbnail' => __('Website Homepage Screenshot'),
+    'internal_page_screenshot' => __('Internal Page Screenshot') ,
+  ),
+  'hide_meta_box' => array(
     'author'
-  )
-  ,'status' => array(
+  ),
+  'status' => array(
     'new' => array(
-      'label' => 'New'
-      ,'public' => false
-    )
-    ,'pending' => array(
-      'label' => 'Pending Review'
-      ,'public' => false
-    )
-    ,'demo' => array(
-      'label' => 'Demo'
-      ,'public' => true
-      ,'exclude_from_search' => true
-      ,'show_in_admin_all_list' => true
-      ,'show_in_admin_status_list' => true
-   )
-    ,'lock' => array(
-      'label' => 'Lock'
-      ,'public' => true
-    )
+      'label' => 'New',
+      'public' => false
+    ),
+    'pending' => array(
+      'label' => 'Pending Review',
+      'public' => false
+    ),
+    'demo' => array(
+      'label' => 'Demo',
+      'public' => true,
+      'exclude_from_search' => true,
+      'show_in_admin_all_list' => true,
+      'show_in_admin_status_list' => true,
+   ),
+    'lock' => array(
+      'label' => 'Lock',
+      'public' => true
+    ),
   )
 );
 return $post_types;
@@ -165,7 +166,6 @@ return $post_types;
 
 // populate data into admin columns for custom post type portfolio2
 // can not do in Piklist
-// ??? Why get error when try to replace $post_id with $post=>ID  ???
 add_action( 'manage_portfolio2_posts_custom_column', 'portfolio2_custom_columns', 10, 2 );
 
 function portfolio2_custom_columns( $column, $post_id ) {

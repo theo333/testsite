@@ -13,7 +13,7 @@
 /**************** CONTACTS **********************/
 /**************** The WP Way ********************/
 
-/* register custom post type Contacts */
+//** Register Custom Post Type Contacts
 add_action( 'init', 'create_posttype_contacts' );
 
 function create_posttype_contacts() {
@@ -37,7 +37,8 @@ function create_posttype_contacts() {
         
 }
 
-// register admin columns for CPT Contacts
+//** Register Admin Columns for CPT Contacts
+//* status: not working yet
 //add_filter( 'manage_contacts_posts_columns', 'add_contacts_columns');
 //
 //function add_contacts_columns() {
@@ -54,8 +55,8 @@ function create_posttype_contacts() {
 /**************** CONTACTS 2 ********************/
 /**************** The Piklist Way ***************/
 
-// https://piklist.com/learn/doc/piklist_post_types/
-// Piklist: add 'contacts2' custom post type
+//** Piklist: add 'contacts2' custom post type **
+//* ref: https://piklist.com/learn/doc/piklist_post_types/
 add_filter( 'piklist_post_types', 'piklist_contacts2_post_type');
 
 function piklist_contacts2_post_type() {
@@ -67,39 +68,39 @@ function piklist_contacts2_post_type() {
     );
     
     $post_types['contacts2'] = array(
-        'labels'        => $labels
-        ,'title'         => __( 'Enter a New Contact Name' )
-        // ,'menu_icon' => 
-        // ,'page_icon' => 
-        ,'supports'     => array(
+        'labels'        => $labels,
+        'title'         => __( 'Enter a New Contact Name' ),
+        // 'menu_icon' => 
+        // 'page_icon' => 
+        'supports'     => array(
             'title'
             // what else?
-        )
-        ,'public'        => true
-        ,'admin_body_class' => array(
+        ),
+        'public'        => true,
+        'admin_body_class' => array(
             'custom-body-class'
-        )
-        ,'has_archive'  => true
-        ,'rewrite'      => array(
+        ),
+        'has_archive'  => true,
+        'rewrite'      => array(
             'slug'  => 'contacts2'
-        )
-        ,'capability_type' => 'post'
-        ,'edit_columns' => array(
-            'title'     => __( 'Contact Name' )
-            ,'cm_company_name'  => __( 'Company Name' )
-            ,'cm_email_address' => __( 'Email Address' )
-            ,'cm_phone_number' => __( 'Phone Number' )
-        )
-        ,'hide_meta_box' => array(
+        ),
+        'capability_type' => 'post',
+        'edit_columns' => array(
+            'title'     => __( 'Contact Name' ),
+            'cm_company_name'  => __( 'Company Name' ),
+            'cm_email_address' => __( 'Email Address' ),
+            'cm_phone_number' => __( 'Phone Number' )
+        ),
+        'hide_meta_box' => array(
             'author'
-        )
+        ),
     );
     return $post_types;
     
 }
 
-// populate data into admin columns for CPT 'contacts2'
-// Note: can not do in Piklist
+//** Populate Data Into Admin Columns for CPT 'contacts2' **
+//* Note: can not do in Piklist
 add_action( 'manage_contacts2_posts_custom_column', 'contacts2_custom_columns', 10, 2 );
 
 function contacts2_custom_columns($column, $post_id) {
