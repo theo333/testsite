@@ -40,7 +40,7 @@ get_header(); ?>
                         if ( $image_ids ) {
                             foreach( $image_ids as $image_id) {
                                 $image_src = wp_get_attachment_image( $image_id, 'thumbnail');
-                                echo $image_src . ' ';  // why echo vs return?
+                                echo $image_src . ' ';  
                             }
                         }
                     ?>
