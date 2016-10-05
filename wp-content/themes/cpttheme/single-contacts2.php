@@ -13,8 +13,9 @@ get_header(); ?>
 		<main id="main" class="site-main" role="main">
 		
 		<?php
-		while ( have_posts() ) {
-            the_post();
+        // ? can I get rid of The WP Loop for single posts ? - works without     
+//		while ( have_posts() ) {
+//            the_post();
 
             // replaced line below with contents of content-contacts2.php
 //			get_template_part( 'template-parts/content-contacts2', get_post_format() );
@@ -40,7 +41,7 @@ get_header(); ?>
                         $notes      = get_post_meta( $id, 'cm_notes', true );
             
 
-
+                    // ****************** RELATIONSHIPS **************************  
                     // can have multiple relationships, so use join() or implode() to display all relationships.  
                     // ? What is difference between join(glue, array) and implode(glue, array) ?
                     // ? Do not need foreach loop ?
@@ -72,7 +73,7 @@ get_header(); ?>
 
 
                           // **************************************************************            
-//                        // FOR DEBUGGING PURPOSES ONLY:  output array         
+                        // FOR DEBUGGING PURPOSES ONLY:  output array         
 //                        var_dump($address_group_add_mores);
 //            
 //                        echo 'address_1s';
@@ -144,13 +145,16 @@ get_header(); ?>
 
                     }
 
-                    // function to output address(es) info
+                    
+                    // ************** ADDRESSES - function to output info *************
                     // ? how to pass in arguments or values to this function - e.g. $id, etc. ?
                     function address_output() {
                         // Using output_addr Method:
                         $id         = get_the_ID();  
                         $address_group_add_mores = get_post_meta( $id, 'cm_address_group_add_more', false );
                         $length = count($address_group_add_mores[0]);
+                        
+                        echo "(Just figuring out how to display multiple addresses.)<br/><br/>";
 
                         for ($i = 0; $i < $length; $i++) {
 
@@ -169,9 +173,10 @@ get_header(); ?>
                     }
                     
                     address_output();
+                    
 
-                    // **************************************************************
-                    // create output string and display on screen
+                    // ******************** DISPLAY INFO ************************
+                    // Create output string and display on screen
                     // prob: does not enable to show multiple Addresses or Phone Numbers
 
 //                        $labels = array('Company:', 'Email Address:', 'Phone Number:', 'Date Met:', 'Relationships:', 'Notes:');
@@ -190,19 +195,19 @@ get_header(); ?>
                         'Relationships(implode)'   => $relationships_implode,
                         'Notes'                    => $notes
                     );
+                    
+                    echo '<table>';
 
                     foreach( $info_output as $info_key => $info_value) {
                         if ($info_value) {
-                            echo "<b>$info_key:</b>" . "&nbsp;&nbsp;" . "$info_value" . "<br/>";  
-
-//                                echo "<br/><br/><br/><br/><br/>";
-//                                echo "<li>" . "<b>$info_key</b>". "</li><li>" . "$info_value" . "</li>";
+                            echo "<tr><th><b>$info_key</b></th>" . "<th>$info_value</th></tr>";
+//                            echo "<b>$info_key:</b>&nbsp;&nbsp;$info_value<br/>";  // non-table display
                         }
                     }
-
+                    echo '</table>';
             
-                    // **************************************************************
-                    // first attempt - prob is can not display multiple Addresses or Phone Numbers
+                    // ******************** DISPLAY INFO - first attempt ************************
+                    // prob: can not display multiple Addresses or Phone Numbers
 //                        echo <<<HTML
 //                            <h3>$name</h3>
 //                            <b>Company:</b> $company<br/>
@@ -224,7 +229,7 @@ get_header(); ?>
             
 			// the_post_navigation();
 
-        } // End of the loop.
+//        } // End of the loop.
 		?>
 
 		</main><!-- #main -->
